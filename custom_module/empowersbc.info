@@ -1,0 +1,13 @@
+name = Empowersbc
+description = "This module is for custom configuration in webforms / views throughout the site in emPowersbc"
+core = 7.x
+package = Empowersbc
+
+version = "7.x-1.0"
+core = "7.x"
+project = "empowersbc"
+datestamp = "1409562229"
+
+scripts[] = js/vendor/jquery.formatCurrency-1.4.0.min.js
+scripts[] = js/empowersbc.js
+stylesheets[all][] = css/empowersbc.css

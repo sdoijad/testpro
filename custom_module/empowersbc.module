@@ -1,0 +1,979 @@
+<?php
+/**
+ * @file
+ * The empowersbc module custom changes in webforms/views which are using in empower site.
+ * Author : Sachin Doijad
+ */
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(-1);
+
+module_load_include('php', 'empowersbc', 'functions');
+module_load_include('php', 'empowersbc', 'forms');
+module_load_include('php', 'empowersbc', 'webform_hooks');
+
+
+/**
+ * Implements hook_init().
+ */
+function empowersbc_init()
+{
+  // check current url of contractor login
+  if (user_is_anonymous() && current_path() == 'node/350') {
+    drupal_goto('user/login'); //redirect to user login page
+  }
+  drupal_add_library('system', 'ui.tooltip');
+  drupal_add_library('system', 'ui.accordion');
+  //drupal_add_js(drupal_get_path('module', 'empowersbc') . '/js/empowersbc.js');
+
+  define('HOMEOWNER', 'homeowner-portal');
+  define('CONTRACTOR', 'contractor-portal');
+  define('LENDER', 'lender-portal');
+  define('STEP1', 'choose-your-contractor-upgrades');
+  define('STEP2', 'empower-financing-details');
+  define('STEP3', 'install-upgrades');
+  define('STEP4', 'receive-funds-enjoy-benefits');
+}
+
+/**
+ * Implements hook_permission().
+ */
+function empowersbc_permission()
+{
+  return array(
+    'configure empowersbc' => array(
+      'title' => t('Configure empowersbc'),
+      'description' => t('Configure Drupal settings to communicate with empowersbc.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function empowersbc_menu()
+{
+  // Callback use by empowersbc for remote authentication.
+  $items['accept/lead/%/%'] = array(
+    'title' => 'empowersbc accept lead',
+    'page callback' => '_empowersbc_accept_lead',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  // Callback use by empowersbc for remote authentication.
+  $items['donot/accept/lead/%/%'] = array(
+    'title' => 'empowersbc do not accept lead',
+    'page callback' => '_empowersbc_donot_accept_lead',
+    'page arguments' => array(3, 4),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  // Ajax request for submit the loan detail form using Submit pre-review
+  $items['submit/prereview/%'] = array(
+    'title' => 'empowersbc submit pre review',
+    'page callback' => '_empowersbc_submit_review_pre',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  // Ajax request for submit the loan detail form using Submit post-review
+  $items['submit/postreview/%'] = array(
+    'title' => 'empowersbc submit post review',
+    'page callback' => '_empowersbc_submit_review_post',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  // Ajax request for submit the loan detail form using Submit post-review
+  $items['select/contractors'] = array(
+    'title' => 'empowersbc select participating contractors',
+    'page callback' => '_empowersbc_select_participating_contractors',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  // Ajax request for Change the status : Pending for Pre-Qualification
+  $items['loan/status/%/%/%'] = array(
+    'title' => 'empowersbc update loan status',
+    'page callback' => '_empowersbc_set_loan_status',
+    'page arguments' => array(2, 3, 4),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  // Ajax request for submit the loan detail form using Submit post-review
+  $items['update/variable/%/%/%'] = array(
+    'title' => 'empowersbc update the Drupal variable values',
+    'page callback' => '_empowersbc_update_variable_values',
+    'page arguments' => array(2, 3, 4),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Custom function to Get all the information for customers on Customers Info Page
+ */
+function _empowersbc_contractor_project_info_page($userId)
+{
+
+  //Get civicrm contact id from current drupal user
+  $contact = _empowersbc_get_civicrm_contactid($userId);
+  $employer_id = _empowersbc_get_employer_id();
+
+  if (!$contact) {
+    return;
+  }
+
+  // check relationship
+  $params = array(
+    'version' => 3,
+    'sequential' => 1,
+    'contact_id_a' => $contact,
+    'relationship_type_id' => 4,
+    'is_active' => 1,
+  );
+
+  $resultRelationship = civicrm_api('Relationship', 'getsingle', $params);
+
+  if ($resultRelationship['is_error'] == 0 && !empty($resultRelationship)) {
+    //Employer ID
+    $orgId = $resultRelationship['contact_id_b'];
+
+    $params = array(
+      'version' => 3,
+      'sequential' => 1,
+      'contact_id' => $orgId,
+      'return' => 'display_name,custom_276',
+    );
+
+    // Get employer details
+    $currentEmployer = civicrm_api('Contact', 'getsingle', $params);
+
+    $contractor_listing = '';
+    if ($currentEmployer) {
+      $orgName = $currentEmployer['display_name'];
+      $contractor_listing = "<div style='font-weight: bold;color:#fff; background:none repeat scroll 0 0 #f9991e;margin:2px;padding:7px;'> My Information  </div>";
+      $contractor_listing .= "<div style='border: 1px solid #bebfb9; background:none repeat scroll 0 0 #f3f4ee;margin:2px;padding:7px;'>";
+      $contractor_listing .= "<div id='building-img'></div>My Organization : <a href='building-company-information?cid1=" . $orgId . "'>" . $orgName . "</a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div id='new-lead-img'></div> My Lead : <a href='create-new-lead'>" . "Create New Lead" . "</a></div>\n";
+    }
+
+    // Get contacts for project has relationship type
+    $params = array(
+      'version' => 3,
+      'sequential' => 1,
+      'contact_id_a' => $orgId,
+      'relationship_type_id' => 13,
+      'is_active' => 1,
+      'return.start_date' => 1,
+    );
+
+    //$resultProject = civicrm_api('Relationship', 'get', $params);
+
+    //Get the records as per the following project status sorting
+    //$status_order = array('Lead', 'Confirmed Lead', 'Active', 'Completed', 'Unrealized Lead', 'Canceled');
+
+    //$resultProjectSorted = _empowersbc_sort_by_project_status($resultProject, $status_order);
+    $resultProjectSorted = _get_lead_info_for_contractor($orgId);
+
+    $contractedWith = $contactIds = array();
+    if (!empty($resultProjectSorted)) {
+      foreach ($resultProjectSorted as $key => $values) {
+        $contactIds[$values['contact_id_b']] = $values['contact_id_b'];
+        $projectStatusGroup[$values['custom_289']][] = $values['contact_id_b'];
+      }
+    }
+
+    if (!empty($contactIds)) {
+      $params = array(
+        'version' => 3,
+        //'sequential' => 1,
+        'rowCount' => '1000',
+        'return.display_name' => 1,
+        'contact_id' => array(
+          'IN' => array_keys($contactIds),
+        ),
+      );
+      $result_relation = civicrm_api('Contact', 'get', $params);
+      $result_contact = $result_relation['values'];
+
+      foreach ($projectStatusGroup as $status => & $statusArray) {
+        $statusArray = count($statusArray);
+      }
+
+      if ($result_contact) {
+        $status_chkbox = " ";
+        $status_chkbox .= "<input type='checkbox' name='Lead' value='lead' checked> Lead" . "&nbsp;&nbsp;";
+        $status_chkbox .= "<input type='checkbox' name='timedoutleads' value='timedoutleads' > Timed Out Leads" . "&nbsp;&nbsp;";
+        $status_chkbox .= "<input type='checkbox' name='Confirmed' value='confirmedlead' checked> Confirmed Lead" . "&nbsp;&nbsp;";
+        $status_chkbox .= "<input type='checkbox' name='Active' value='active' checked> Active" . "&nbsp;&nbsp;";
+        $status_chkbox .= "<input type='checkbox' name='Completed' value='completed'> Completed" . "&nbsp;&nbsp;";
+        $status_chkbox .= "<input type='checkbox' name='Unrealized' value='unrealizedlead'> Unrealized Lead" . "&nbsp;&nbsp;";
+        $status_chkbox .= "<input type='checkbox' name='Canceled' value='canceled'> Canceled";
+
+        $contractor_listing .= "<div id='portal-status' style='font-weight: bold;color:#fff; background:none repeat scroll 0 0 #f9991e;margin:2px;padding:7px;'>My Projects </br><span> " . $status_chkbox . "</span></div><div style='margin:10px;'><span style='display:none;color:#f9991e;font-weight: bold;' id='lead_status'></span></div>";
+
+        $contractor_listing .= "<div id='container'>";
+        $lastProjectStatus = '';
+        $i = 0;
+        $contactIDB = array();
+        foreach($resultProjectSorted as $k => $values) {
+          $contactIDB[]= $values['contact_id_b'];
+        }
+        //Get the Energy coach activity
+        $contactIDBActivities = _empowersbc_get_activities($contactIDB, '41');
+
+        foreach ($resultProjectSorted as $k => $values) {
+          $projectStatus = $values['custom_289'];
+          $last_updated_date = $values['custom_300'];
+          $contactID = $values['contact_id_b'];
+          $values['display_name'] = $result_contact[$contactID]['display_name'];
+          $values['rel_id'] = $values['id'];
+          $values['id'] = $values['contact_id_b'];
+          $additionalMsg = '';
+          // if contact is deleted then skip showing in portal
+          if (empty($result_contact[$contactID])) {
+            $projectStatusGroup[$projectStatus]--;
+            continue;
+          }
+          $color = '#fff';
+          if ($i%2 == '0') {
+            $color = '#ffefae';
+          }
+          $i++;
+          if ($projectStatus) {
+            $project_status = 'Project Status : ' . '<span id="project-status">' . $projectStatus . '</span>';
+          }
+          $energy_coach_activity = '';
+          $energy_coach = '';
+
+          //Show Accept lead button, if  project status = 'lead'
+          $accept_lead_button = $donot_accept_lead_button = '';
+          $homeowner_name = '<a href="constituent-information?cid1=' . $values['id'] . '"> ' . $values['display_name'] . '</a>';
+          $home_data = '<a href="home-details?cid1=' . $values['id'] . '">    Home Data    </a>';
+
+          //Get the Energy coach activity
+          $energy_coach_activity_id =  ''; //_empowersbc_get_activity($values['id'], '41');
+          if (array_key_exists($values['id'], $contactIDBActivities) && !empty($contactIDBActivities[$values['id']]['id'])) {
+            $energy_coach_activity_id = $contactIDBActivities[$values['id']]['id'];
+          }
+
+          //Get Energy coach Activity Status
+          $energy_coach_activity_status = '';
+          if(!empty($energy_coach_activity_id)) {
+            $energy_coach_activity_status = $contactIDBActivities[$values['id']]['status']; 
+            //_empowersbc_get_ecv_activity_status($values['id'],$energy_coach_activity_id);
+          }
+
+          if ($energy_coach_activity_id) {
+            $energy_coach_activity = '&activity1=' . $energy_coach_activity_id;
+            $energy_coach = '<a href="energy-coach-visit?cid1=' . $values['id'] . $energy_coach_activity . '"> Energy Coach </a>';
+          }
+
+          $loan_details = '<a href="loan-details?cid1=' . $values['id'] . '"> Loan Details </a>';
+          $project_information = $project_completed = $alert_counts = $preliminary_estimate = '';
+          if ($projectStatus == 'Active' || $projectStatus == 'Completed' || $projectStatus == 'Confirmed Lead') {
+            $project_information = '<a href="project-updates?cid1=' . $employer_id . '&cid2=' . $values['id'] . '&relationship1=' . $values['rel_id'] . '"> Project Updates </a>';
+            $project_completed = '<a href="project-completed?cid1=' . $values['id'] . '"> Project Completed </a>';
+          }
+
+          if ($projectStatus == 'Lead' || $projectStatus == 'Active' || $projectStatus == 'Completed' || $projectStatus == 'Confirmed Lead') {
+            $preliminary_estimate = '<a href="preliminary-estimate?cid1=' . $employer_id . '&cid2=' . $values['id'] . '&relationship1=' . $values['rel_id'] . '"> Preliminary Estimate </a>';
+          }
+
+          $alert_counts = _empowersbc_get_project_upated_alter($last_updated_date);
+
+          if ($projectStatus == 'Unrealized Lead') {
+            $energy_coach = '';
+            $loan_details = '';
+          }
+
+          if ($projectStatus == 'Lead' || $projectStatus == 'Timed Out Leads') {
+            if ($currentEmployer['custom_276'] == 'suspended') {
+              $accept_lead_button = '<input  type="button" value="Accept Lead" disabled>';
+              $additionalMsg = '<span style="color:red" id=""> (You have been suspended. Please contact <a style="color:red" href="mailto:info@emPowerSBC.org">emPower staff</a>.) </span>';
+            } else if ($values['start_date'] && strtotime($values['start_date']) < strtotime('-1 week')) {
+              $accept_lead_button = '<input  type="button" value="Accept Lead" disabled>';
+              $accept_lead_button .= ' <span id="project-status">Timed Out Leads</span>';
+            } else {
+              $accept_lead_button = '<input cid1="' . $values['id'] . '" orgid="' . $orgId . '" relid="' . $values['rel_id'] . '" type="button" id="accept-lead" value="Accept Lead">';
+              $donot_accept_lead_button = '<input cid1="' . $values['id'] . '" orgid="' . $orgId . '" relid="' . $values['rel_id'] . '" type="button" id="donot-accept-lead" value="Don\'t Accept Lead">';
+            }
+            $homeowner_name = '<a href="constituent-information?cid1=' . $values['id'] . '"> Home Owner </a>';
+            $home_data = '<a href="home-details?cid1=' . $values['id'] . '"> Home Data </a>';
+            $loan_details = '';
+          }
+
+          //Display of all the Hyperlinks
+          if ($lastProjectStatus != $projectStatus) {
+            $status_id = strtolower(str_replace(' ', '', $projectStatus));
+            $contractor_listing .= "<div style='border:1px solid #bebfb9 ;margin:2px;padding:7px;' id='" . $status_id . "'>";
+            $contractor_listing .= "<span id='p-status' class='portal-url'>" . $project_status . $additionalMsg . "</span>";
+          }
+
+          //Constituent information and Homeowner data
+          $contractor_listing .= "<div class='row' style='background:{$color};'><span id='h-name' class='portal-url'><div id='h-name-img'></div>" . $homeowner_name . "</span>" . "&nbsp;" ;
+            
+          //Energy Coach
+          if ($energy_coach) {
+            $contractor_listing .= "<span id='e-coach' class='portal-url'><div id='e-coach-img'></div>" . $energy_coach . "</span>" . "&nbsp; ";
+          } else {
+            $contractor_listing .= "<span style='width: 115px;' id='e-coach' class='portal-url'>................</span>" . "&nbsp; ";
+          }
+
+          //Preliminary estimate, Show Preliminary ONLY If ECV completed.
+	  if ($preliminary_estimate && $energy_coach_activity_status) {
+	    $contractor_listing .= "<span id='d-bid' class='portal-url'><div id='d-bid-img'></div>" . $preliminary_estimate . "</span>" . "&nbsp; ";
+          } else {
+            $contractor_listing .= "<span style='width: 156px;' id='d-bid' class='portal-url'>................</span>" . "&nbsp; ";
+          }
+
+          //Project Information
+          if ($project_information) {
+            $contractor_listing .= "<span id='p-info' class='portal-url'><div id='p-info-img'></div>" . $project_information . $alert_counts . "</span>" . "&nbsp; ";
+          }
+
+          //Loan Details
+          if ($loan_details) {
+            $contractor_listing .= "<span id='l-details' class='portal-url'><div id='loan-img'></div>" . $loan_details . "</span>";
+          }
+
+          //Project completed
+          if ($project_completed) {
+            $contractor_listing .= "<span id='p-complete' class='portal-url'><div id='p-complete-img'></div>" . $project_completed . "</span>" . "&nbsp; ";
+          }
+
+          //Accept lead button
+          if ($accept_lead_button) {
+            $is_pe = false;
+            $get_preliminary_estimate = _empowersbc_get_preliminary_estimates($values['id'], $employer_id);
+
+            //Check in PE : if Estimated Total Cost" > 0
+            if (!empty($get_preliminary_estimate) &&
+              (isset($get_preliminary_estimate[0]['custom_404'])) &&
+              (!empty($get_preliminary_estimate[0]['custom_404'])) 
+            ) {
+              $is_pe = true;
+            }
+            $contractor_listing .= "<span id='l-btn' data=" . $is_pe . ">&nbsp;&nbsp;" . $accept_lead_button . "</span>";
+          }
+
+          //Accept lead button
+          if ($donot_accept_lead_button) {
+            $contractor_listing .= "<span id='l-btn'>&nbsp;&nbsp;" . $donot_accept_lead_button . "</span>";
+          }
+
+          $projectStatusGroup[$projectStatus]--;
+          if ($projectStatusGroup[$projectStatus] == 0) {
+            $contractor_listing .= "</div> </div>\n";
+          } else {
+            $contractor_listing .= '</div>';
+          }
+          $lastProjectStatus = $projectStatus;
+        }
+        $contractor_listing .= "</div>";
+        echo $contractor_listing;
+
+
+      } else {
+        drupal_set_message('No Records are found', 'error');
+      }
+    } else {
+      drupal_set_message('No Records are found', 'error');
+    }
+
+  } else {
+    drupal_set_message('No Records are found', 'error');
+  }
+
+}
+
+/**
+ * Custom function to Get all the information for Homeowners on Homeowner's Info Page
+ */
+function _empowersbc_homeowner_project_info_page($userId)
+{
+  //Get civicrm contact id from current drupal user
+  $contact = _empowersbc_get_civicrm_contactid($userId);
+
+  if (!$contact) {
+    return;
+  }
+
+  $params = array('id' => $contact);
+  $result = civicrm_api3('contact', 'getsingle', $params);
+
+  $energy_coach_activity_id = _empowersbc_get_activity($contact, '41');
+  $energy_coach_activity = '';
+  $energy_coach = '';
+
+  $homeowner_listing = '';
+  if ($result) {
+    $homeowner_name = '<a href="constituent-information?cid1=' . $contact . '"> ' . $result['display_name'] . '</a>';
+    $home_data = '<a href="home-details?cid1=' . $contact . '"> Home Data </a>';
+    $project_information = '<a href="project-updates?cid1=' . $contact . '"> Project Updates </a>';
+    $project_completed = '<a href="project-completed?cid1=' . $contact . '"> Project Completed </a>';
+
+    if ($energy_coach_activity_id) {
+      $energy_coach_activity = '&activity1=' . $energy_coach_activity_id;
+      $energy_coach = '<a href="energy-coach-visit?cid1=' . $contact . $energy_coach_activity . '"> Energy Coach </a>';
+    }
+
+    $loan_details = '<a href="loan-details?cid1=' . $contact . '"> Loan Details </a>';
+    $homeowner_listing = "<div style='font-weight: bold;color:#fff; background:none repeat scroll 0 0 #f9991e;margin:2px;padding:7px;'> My Information Homeowner </div>";
+
+    //Constituent information and Homeowner data
+    $homeowner_listing .= "<div style='border:1px solid #bebfb9;margin:2px;padding:7px;'>" .
+      "<span id='h-name' class='portal-url'><div id='h-name-img'></div>" . $homeowner_name . "</span>" . "&nbsp;&nbsp;" .
+      "<span id='h-data' class='portal-url'><div id='h-data-img'></div>" . $home_data . "</span>" . "&nbsp;&nbsp;" .
+      "</div>";
+
+    $homeowner_listing .= "<div style='font-weight: bold;color:#fff; background:none repeat scroll 0 0 #f9991e;margin:2px;padding:7px;'> My Activities  </div>";
+
+    //Project Information , Project Completed , Energy coach and Loan Details
+    $homeowner_listing .= "<div style='border:1px solid #bebfb9;margin:2px;padding:7px;'>" .
+      "<span id='e-coach' class='portal-url'><div id='e-coach-img'></div>" . $energy_coach . "</span>" . "&nbsp;&nbsp; " .
+      "<span id='p-info' class='portal-url'><div id='p-info-img'></div>" . $project_information . "</span>" . "&nbsp;&nbsp; " .
+      "<span id='l-details' class='portal-url'><div id='loan-img'></div>" . $loan_details . "</span>" .
+      "<span id='p-complete' class='portal-url'><div id='p-complete-img'></div>" . $project_completed . "</span>" . "&nbsp;&nbsp;" .
+      "</div>";
+  }
+
+  echo $homeowner_listing;
+}
+
+/**
+ * Custom function to Get all the information for Lenders
+ */
+function _empowersbc_lender_project_info_page($userId)
+{
+  //Get civicrm contact id from current drupal user
+  $contact = _empowersbc_get_civicrm_contactid($userId);
+
+  if (!$contact) {
+    return;
+  }
+
+  // check relationship
+  $params = array(
+    'version' => 3,
+    'sequential' => 1,
+    'contact_id_a' => $contact,
+    'relationship_type_id' => 4,
+    'is_active' => 1,
+  );
+
+  $resultRelationship = civicrm_api('Relationship', 'getsingle', $params);
+
+  if ($resultRelationship['is_error'] == 0 && !empty($resultRelationship)) {
+    //Employer ID
+    $orgId = $resultRelationship['contact_id_b'];
+
+    $params = array(
+      'version' => 3,
+      'sequential' => 1,
+      'contact_id' => $orgId,
+      'return' => 'display_name,custom_276',
+    );
+    // Get employer details
+    $currentEmployer = civicrm_api('Contact', 'getsingle', $params);
+
+    $lender_listing = '';
+    if ($currentEmployer) {
+      $orgName = $currentEmployer['display_name'];
+      $lender_listing = "<div style='font-weight: bold;color:#fff; background:none repeat scroll 0 0 #f9991e;margin:2px;padding:7px;'> My Information Lender </div>";
+      $lender_listing .= "<div style='border: 1px solid #bebfb9; background:none repeat scroll 0 0 #f3f4ee;margin:2px;padding:7px;'>";
+      $lender_listing .= "<div id='building-img'></div>My Organization : <a href='building-company-information?cid1=" . $orgId . "'>" . $orgName . "</a></div> \n";
+    }
+
+    $status_chkbox = " ";
+    $status_chkbox .= "<div style='font-size:13px;'>";
+    $status_chkbox .= "<input type='checkbox' name='Pendingpre-Qualification' value='pendingpre-qualification' checked> Pending Pre-Qualification" . "&nbsp;&nbsp;&nbsp;";
+    $status_chkbox .= "<input type='checkbox' name='Pre-Qualified' value='pre-qualified' checked> Pre-Qualified" . "&nbsp;&nbsp;&nbsp;";
+    $status_chkbox .= "<input type='checkbox' name='Pending Closing' value='pendingclosing' checked> Pending Closing" . "&nbsp;&nbsp;&nbsp;";
+    $status_chkbox .= "<input type='checkbox' name='Loan Closed' value='loanclosed'> Loan Closed" . "&nbsp;&nbsp;&nbsp;";
+    $status_chkbox .= "<input type='checkbox' name='Loan Declined' value='loandeclined'> Loan Declined" . "&nbsp;&nbsp;&nbsp;";
+    $status_chkbox .= "<input type='checkbox' name='Pre-Qualification Denied' value='pre-qualificationdenied'> Pre-qualification Denied";
+    $status_chkbox .= "</div>";
+
+    $lender_listing .= "<div id='portal-status' style='font-weight: bold;color:#fff; background:none repeat scroll 0 0 #f9991e;margin:2px;padding:7px;'>My Loans &nbsp;&nbsp;&nbsp;<span> " . $status_chkbox . "</span></div><div style='margin:10px;'><span style='display:none;color:#f9991e;font-weight: bold;' id='lead_status'></span></div>";
+
+    $lender_listing .= "<div id='container'>";
+    //Get the zip for Current contact organization
+    $postal_codes = array();
+    //For employer - 'Ventura County Credit Union'
+    if ($currentEmployer['id'] == 446) {
+      $postal_codes = array(93013, 93014, 93429, 93117, 93110, 93111, 93116, 93117, 93118, 93117, 93103, 93105, 93103, 93108, 93150, 93101, 93102, 93103, 93105, 93108, 93109, 93120, 93121, 93130, 93140, 93160, 93190, 93199, 93013, 93108, 93067, 93108, 93013, 93106, 93107, 91377, 93010, 93011, 93012, 93001, 91320, 93015, 93016, 91361, 93023, 93020, 93021, 91319, 93022, 93024, 93030, 93031, 93032, 93033, 93034, 93035, 93036, 93040, 93041, 93042, 93043, 93044, 93003, 93004, 93060, 93061, 93063, 93062, 93064, 93065, 93094, 93099, 93066, 91358, 91359, 91360, 91362, 93002, 93005, 93006, 93007, 93009);
+
+      //For employer - 'Coast Hills Credit Union'
+    } else if ($currentEmployer['id'] == 1045) {
+      $postal_codes = array(93463, 93427, 93117, 93463, 93454, 93434, 93455, 93455, 93436, 93440, 93436, 93455, 93458, 93460, 93454, 93427, 93463, 93436, 93437, 93436, 93254, 93438, 93254, 93457, 93464, 93456, 93446, 93420, 93421, 93422, 93423, 93424, 93402, 93407, 93410, 93410, 93407, 93409, 93453, 93428, 93451, 93430, 93461, 93432, 93433, 93483, 93420, 93421, 93435, 93446, 93446, 93446, 93402, 93412, 93442, 93443, 93446, 93444, 93445, 93475, 93451, 93446, 93447, 93420, 93433, 93448, 93449, 93453, 93452, 93401, 93402, 93403, 93405, 93406, 93407, 93408, 93409, 93410, 93412, 93451, 93452, 93453, 93453, 93461, 93448, 93449, 93408, 93401, 93402, 93403, 93405, 93406, 93407, 93408, 93409, 93410, 93412, 93453, 93465);
+    }
+
+    list($get_borrower_list, $loan_status_count) = _get_homeowner_by_lender_zip($postal_codes);
+
+    if (!empty($get_borrower_list)) {
+
+      $lastLoanStatus = '';
+      foreach ($get_borrower_list as $values) {
+
+        $homeowner_name = $home_data = $loan_details = $project_completed = '';
+        $homeowner_name = '<a href="constituent-information?cid1=' . $values['id'] . '"> ' . $values['display_name'] . '</a>';
+        $home_data = '<a href="home-details?cid1=' . $values['id'] . '">    Home Data    </a>';
+        $loan_details = '<a href="loan-details?cid1=' . $values['id'] . '"> Loan Details </a>';
+        $project_completed = '<a href="project-completed?cid1=' . $values['id'] . '"> Project Completed </a>';
+
+        $loanStatus = $values['status'];
+
+        if ($loanStatus) {
+          $project_status = 'Project Status : ' . '<span id="project-status">' . $loanStatus . '</span>';
+        }
+
+        $status_id = strtolower(str_replace(' ', '', $loanStatus));
+        if ($lastLoanStatus != $loanStatus) {
+          $lender_listing .= "<div style='border:1px solid #bebfb9 ;margin:2px;padding:7px;' id='" . $status_id . "'>" .
+            "<span id='p-status' class='portal-url'>" . $project_status . "</span>";
+        }
+
+        //Constituent information
+        if ($homeowner_name) {
+          $lender_listing .= "<span id='h-name' class='portal-url'><div id='h-name-img'></div>" . $homeowner_name . "</span>" . "&nbsp;&nbsp;";
+        }
+
+        //Homeowner data
+        /*
+        if ($home_data) {
+          //$lender_listing .= "<span id='h-data' class='portal-url'><div id='h-data-img'></div>" . $home_data . "</span>" . "&nbsp;&nbsp;";
+        }
+        */
+
+        //Loan Details
+        if ($loan_details) {
+          $lender_listing .= "<span id='l-details' class='portal-url'><div id='loan-img'></div>" . $loan_details . "</span>" . "&nbsp;&nbsp;";
+        }
+
+        //Project completed
+        if ($project_completed) {
+          $lender_listing .= "<span id='p-complete' class='portal-url'><div id='p-complete-img'></div>" . $project_completed . "</span>" . "&nbsp; ";
+        }
+
+        $loan_status_count[$loanStatus]--;
+        if ($loan_status_count[$loanStatus] == 0) {
+          $lender_listing .= "</div>\n";
+        } else {
+          $lender_listing .= '<br/>';
+        }
+        $lastLoanStatus = $loanStatus;
+      }
+
+      $lender_listing .= "</div>";
+      echo $lender_listing;
+    } else {
+      drupal_set_message('No Records are found', 'error');
+    }
+  } else {
+    drupal_set_message('No Records are found', 'error');
+  }
+}
+
+/**
+ * Function to disable all fields
+ */
+function _empowersbc_disable_form_fields(&$form, $enable_fields = null, $show_selected_fields = null)
+{
+
+  $components = $form['#node']->webform;
+
+  foreach ($components['components'] as $key => $fields) {
+    $fieldset = $components['components'][1]['form_key'];
+    $form_key = $fields['form_key'];
+
+    //Disable all the fields
+
+    $form['submitted'][$fieldset][$form_key]['#attributes']['disabled'] = true;
+    $form['submitted'][$fieldset][$form_key]['#attributes']['readonly'] = 'readonly';
+    if ($form['submitted'][$fieldset][$form_key]['#type'] == 'file' || $form['submitted'][$fieldset][$form_key]['#type'] == 'managed_file') {
+      $form['submitted'][$fieldset][$form_key]['#attributes'] = array('class' => array('file-disable'));
+    }
+
+    //Skiped field to enabled
+    if (isset($enable_fields)) {
+      foreach ($enable_fields as $enable_fields_key) {
+        $form['submitted'][$fieldset][$enable_fields_key]['#attributes'] = array();
+      }
+    }
+
+    //Show only selected fields
+    if (isset($show_selected_fields)) {
+
+      //Hide all fields
+      $form['submitted'][$fieldset][$form_key]['#wrapper_attributes'] = array('class' => array('webform-hide'));
+      //Show fields as per parameters
+      if (in_array($form_key, $show_selected_fields)) {
+        $form['submitted'][$fieldset][$form_key]['#wrapper_attributes'] = array('class' => array('webform-show'));
+      }
+    }
+  }
+
+  //Add Back button action, as per role
+  global $user;
+  $back_url = CONTRACTOR;
+
+  if (in_array('emPower homeowner', $user->roles)) {
+    $back_url = HOMEOWNER;
+    if(isset($_GET['redirect']) && ($_GET['redirect'] == 'step1')){
+      $back_url = STEP1;
+    }
+    if(isset($_GET['redirect']) && ($_GET['redirect'] == 'step2')){
+      $back_url = STEP2;
+    }
+    if(isset($_GET['redirect']) && ($_GET['redirect'] == 'step3')){
+      $back_url = STEP3;
+    }
+    if(isset($_GET['redirect']) && ($_GET['redirect'] == 'step4')){
+      $back_url = STEP4;
+    }
+  }
+
+  if (in_array('emPower lender', $user->roles)) {
+    $back_url = 'lender-portal';
+  }
+
+  $form['actions']['back'] = array(
+    '#type' => 'button',
+    '#value' => t('Back'),
+    '#weight' => 100,
+    '#validate' => array(),
+    '#attributes' => array('onclick' => "window.location = '$back_url'; return false;", 'class' => array('back-btn')),
+  );
+
+}
+
+/**
+ * Implements hook_mail().
+ */
+function empowersbc_mail($key, &$message, $params)
+{
+  //Set the email Content Type
+  $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+
+  // Get employer details
+  global $user;
+  if (isset($_GET["cid1"])) {
+    $contactId = $_GET["cid1"];
+  } else {
+    $contactId = _empowersbc_get_civicrm_contactid($user->uid);
+  }
+  //Get the civicrm contact details
+  $currentEmployer = _empowersbc_get_civicrm_contactdetails($contactId);
+
+  if (isset($currentEmployer['display_name'])) {
+    $display_name = $currentEmployer['display_name'];
+  }
+
+  // Use the key we used in our call to drupal_mail()
+  switch ($key) {
+    case "loan_review_pre" :
+      $body = "Loan documents review are needed for " . $display_name;
+      // Set the subject and body of the message.
+      $message['subject'] = 'Pre-Installation : Loan documents review';
+      $message['body'][] = $body;
+      break;
+
+    case "loan_review_post" :
+      $body = "Loan documents review are needed for " . $display_name;
+      // Set the subject and body of the message.
+      $message['subject'] = 'Post-Installation : Loan documents review';
+      $message['body'][] = $body;
+      break;
+  }
+
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function empowersbc_form_alter(&$form, &$form_state, $form_id)
+{
+  global $user;
+
+  $user_role = '';
+  if (in_array("emPower contractor", $user->roles)) {
+    $user_role = "contractor";
+  } else if (in_array("emPower homeowner", $user->roles)) {
+    $user_role = "homeowner";
+  }
+  $values = array(
+    "user_role" => $user_role
+  );
+  drupal_add_js(array('user' => $values), 'setting');
+
+  //Get the contact id from Webform Url
+  if (isset($_GET["cid1"])) {
+
+    $contactId = $_GET["cid1"];
+
+    //Check for the valid Homeowners of logged in Contractors of webform
+    if (in_array('emPower contractor', $user->roles) && !_empowersbc_valid_user($user->uid, $contactId)) {
+      drupal_set_message('You are not authorized to view this information', 'error');
+      drupal_goto(CONTRACTOR);
+    }
+
+    $project_status = _empowersbc_get_project_status($contactId);
+    $user_role = $user->uid;
+
+    /*** Loan Details form ***/
+    if ($form_id == 'webform_client_form_352') {
+
+      $form['actions']['submit_review_pre'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit for Pre-Installation Review'),
+        '#attributes' => array('class' => array('pre-loan-form-submit'))
+      );
+
+      $form['actions']['submit_review_post'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit for Post-Installation Review'),
+        '#attributes' => array('class' => array('post-loan-form-submit'))
+      );
+
+      //All Access for Lenders for this form
+      if (!in_array('emPower lender', $user->roles)) {
+        //Disable all the status fields only
+        //_empowersbc_disable_form_fields($form);
+        $form['submitted']['civicrm_1_contact_1_fieldset_fieldset']['civicrm_1_contact_1_cg11_custom_290']['#attributes']['disabled'] = true;
+        $form['submitted']['civicrm_1_contact_1_fieldset_fieldset']['civicrm_1_contact_1_cg11_custom_291']['#attributes']['disabled'] = true;
+        $form['submitted']['civicrm_1_contact_1_fieldset_fieldset']['civicrm_1_contact_1_cg11_custom_293']['#attributes']['disabled'] = true;
+        //$form['submitted']['civicrm_1_contact_1_fieldset_fieldset']['civicrm_1_contact_1_cg11_custom_292']['#attributes'] = array('class' => array('file-disable'));
+        unset($form['actions']['back']);
+      } else {
+        // Not using unset to hide the submit button, Its hide by using css. Because click() get called on that button in JS
+        //unset($form['actions']['submit']);
+        $form['actions']['back'] = array('#type' => 'button', '#value' => t('Go to Dashboard'), '#weight' => 100, '#validate' => array(), '#attributes' => array('onclick' => "window.location = 'lender-portal'; return false;", 'class' => array('back-btn')),);
+      }
+
+    }
+
+    /*** Building company Information ***/
+    if ($form_id == 'webform_client_form_344') {
+
+      //For User Role: emPower Contractor
+      if (in_array('emPower contractor', $user->roles)) {
+        //Enable all fields except - 'Contractor Status' and 'Retrofit rewards current balance'
+        $form['submitted']['civicrm_1_contact_1_fieldset_fieldset']['civicrm_1_contact_1_cg3_custom_52']['#attributes']['disabled'] = true;
+        $form['submitted']['civicrm_1_contact_1_fieldset_fieldset']['civicrm_1_contact_1_cg3_custom_276']['#attributes']['disabled'] = true;
+      }
+
+      //For User Role: emPower Homeonwer, Access denied
+      if (in_array('emPower homeowner', $user->roles)) {
+        drupal_set_message('You are not authorized to view this information', 'error');
+        drupal_goto(HOMEOWNER);
+      }
+
+    }
+
+    /*** "Project Information-OLD" ***/
+    if ($form_id == 'webform_client_form_349') {
+      //For User Role: emPower Homeonwer
+      if (in_array('emPower homeowner', $user->roles)) {
+        _empowersbc_disable_form_fields($form);
+        unset($form['actions']['submit']);
+      }
+    }
+
+    /*** "Project Information" ***/
+    if ($form_id == 'webform_client_form_373') {
+
+      //For User Role: emPower Homeonwer
+      if (in_array('emPower homeowner', $user->roles)) {
+        _empowersbc_disable_form_fields($form);
+        unset($form['actions']['submit']);
+      } else {
+
+        $form['submitted']['civicrm_2_contact_1_fieldset_fieldset']['civicrm_2_contact_1_relationship_custom_300']['#attributes']['disabled'] = true;
+      }
+    }
+
+    /*** "Project Completed" ***/
+    if ($form_id == 'webform_client_form_348') {
+      //For User Role: emPower lender
+      if (in_array('emPower lender', $user->roles)) {
+        _empowersbc_disable_form_fields($form);
+        unset($form['actions']['submit']);
+      }
+      //For User Role: emPower Homeonwer
+      if (in_array('emPower homeowner', $user->roles)) {
+        $show_selected_fields = array(
+          'civicrm_1_contact_1_cg10_custom_83',
+          'civicrm_1_contact_1_cg10_custom_84',
+          'civicrm_1_contact_1_cg10_custom_87',
+          'civicrm_1_contact_1_cg10_custom_90',
+          'civicrm_1_contact_1_cg10_custom_92',
+          'civicrm_1_contact_1_cg10_custom_115',
+          'civicrm_1_contact_1_cg10_custom_100',
+          'civicrm_1_contact_1_cg10_custom_107',
+          'civicrm_1_contact_1_cg10_custom_109',
+          'civicrm_1_contact_1_cg10_custom_111',
+          'civicrm_1_contact_1_cg10_custom_136',
+          'civicrm_1_contact_1_cg10_custom_216'
+        );
+        _empowersbc_disable_form_fields($form, null, $show_selected_fields);
+        unset($form['actions']['submit']);
+//        $next_url = STEP4;
+//        unset($form['actions']['submit']);
+//        $form['actions']['back'] = array(
+//          '#type' => 'button',
+//          '#value' => t('Next'),
+//          '#weight' => 100,
+//          '#validate' => array(),
+//          '#attributes' => array('onclick' => "window.location = '$next_url'; return false;", 'class' => array('back-btn')),
+//        );
+      }
+    }
+
+    /*** "Energy Coach Visit" ***/
+    if ($form_id == 'webform_client_form_346') {
+      _empowersbc_disable_form_fields($form);
+      $form['actions']['print'] = array(
+          '#type' => 'button',
+          '#value' => t('Print'),
+          '#weight' => 100,
+          '#validate' => array(),
+          '#attributes' => array('onclick' => "window.print(); return false;", 'class' => array('back-btn')),
+        );
+      unset($form['actions']['submit']);
+    }
+
+    /*** "Preliminary Estimate" ***/
+    if ($form_id == 'webform_client_form_415') {
+      if (in_array('emPower homeowner', $user->roles)) {
+        _empowersbc_disable_form_fields($form);
+        unset($form['actions']['submit']);
+      }
+    }
+
+    /*** "My Quote Form" ***/
+    if ($form_id == 'webform_client_form_416') {
+      _empowersbc_disable_form_fields($form);
+      unset($form['actions']['submit']);
+    }
+
+    /*** "Constituent Information" ***/
+    if ($form_id == 'webform_client_form_345') {
+
+      //For User Role: emPower contractor
+      if (in_array('emPower contractor', $user->roles)) {
+
+        //For Project Status : Anything either Lead, Confirmed Lead, completed or ....
+        if ($project_status != 'Lead') {
+
+           $show_enabled_fields = array();          
+           $show_enabled_fields = array('civicrm_1_contact_1_cg5_custom_61',
+            'civicrm_1_contact_1_cg5_custom_16',
+            'civicrm_1_contact_1_cg5_custom_17',
+            'civicrm_1_contact_1_cg5_custom_18',
+            'civicrm_1_contact_1_cg5_custom_19',
+            'civicrm_1_contact_1_cg5_custom_20',
+            'civicrm_1_contact_1_cg5_custom_21',
+            'civicrm_1_contact_1_cg5_custom_22'
+          );
+	  
+          _empowersbc_disable_form_fields($form, $show_enabled_fields);
+          //unset($form['actions']['submit']);
+          //For Project Status : Lead
+        } else {
+          //Show -  City,Zip Code, Country Residance $ I am interested
+          $show_selected_fields = array('civicrm_1_contact_1_address_city',
+            'civicrm_1_contact_1_address_postal_code',
+            'civicrm_1_contact_1_cg1_custom_186',
+            'civicrm_1_contact_1_cg1_custom_6',
+            'civicrm_1_contact_1_cg1_custom_277',
+            'civicrm_1_contact_1_cg5_custom_61',
+            'civicrm_1_contact_1_cg5_custom_16',
+            'civicrm_1_contact_1_cg5_custom_17',
+            'civicrm_1_contact_1_cg5_custom_18',
+            'civicrm_1_contact_1_cg5_custom_19',
+            'civicrm_1_contact_1_cg5_custom_20',
+            'civicrm_1_contact_1_cg5_custom_21',
+            'civicrm_1_contact_1_cg5_custom_22'
+          );
+              
+          _empowersbc_disable_form_fields($form, null, $show_selected_fields);
+          unset($form['actions']['submit']);
+        }
+      }
+
+      //For User Role: emPower homeowner
+      if (in_array('emPower homeowner', $user->roles)) {
+        //Homeower can see/edit  ONLY self information.
+        $current_contact = _empowersbc_get_civicrm_contactid($user->uid);
+        if ($contactId != $current_contact) {
+          drupal_set_message('You are not authorized to view other users information', 'error');
+          drupal_goto(HOMEOWNER);
+        }
+
+        //For Project Status : Anything either Lead, Confirmed Lead, completed or ....
+
+        //Enable - "I am Interested In.." field
+        //$enable_field = array('civicrm_1_contact_1_cg1_custom_277');
+        //_empowersbc_disable_form_fields($form, $enable_field);
+        //unset($form['actions']['back']);
+      }
+
+      //For User Role: emPower lender
+      if (in_array('emPower lender', $user->roles)) {
+        //Show -  City,Zip Code, Country Residance $ I am interested
+        $show_selected_fields = array(
+          'civicrm_1_contact_1_contact_first_name',
+          'civicrm_1_contact_1_contact_last_name',
+          'civicrm_1_contact_1_address_city',
+          'civicrm_1_contact_1_address_postal_code',
+          'civicrm_1_contact_1_cg1_custom_186',
+          'civicrm_1_contact_1_cg1_custom_277'
+        );
+       // _empowersbc_disable_form_fields($form);
+        unset($form['actions']['back']);
+      }
+
+    }
+  }
+
+  //Change the form submit action as per role
+  $submit_url = CONTRACTOR;
+  if (in_array('emPower homeowner', $user->roles)) {
+    $submit_url = HOMEOWNER;
+  }
+
+  if (in_array('emPower lender', $user->roles)) {
+    $submit_url = LENDER;
+    if ($form_id == 'webform_client_form_352') {
+      //$submit_url = request_uri();
+    }
+  }
+
+ 
+  /**5o Home Challenge Redirection**/
+  if ($form_id == 'webform_client_form_438') {
+    $submit_url = current_path();
+  }
+
+   $form['#node']->webform['redirect_url'] = $submit_url;
+}
+
+/**
+ * Implements hook_js_alter().
+ */
+function empowersbc_js_alter(&$javascript) {
+  //Disabled the tooltip for contact us form which cause error for display of title on Next/Previos Button
+  if(current_path() == 'node/320') {
+    $module_js_path = drupal_get_path('module','jquery_update').'/replace/ui/ui/minified/jquery.ui.tooltip.min.js';
+    unset($javascript[$module_js_path]);
+  }
+}

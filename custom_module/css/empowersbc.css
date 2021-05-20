@@ -1,0 +1,1985 @@
+/*contractor & homeowner portal */
+.webform .form-type-radio label:nth-child(2) {
+   display: inline !important; 
+}
+
+input[readonly="readonly"], textarea[readonly="readonly"],
+input.form-radio[readonly="readonly"], input.form-checkbox[readonly="readonly"]{
+    background-color: #eeeeee;
+}
+
+.webform-client-form  div.webform-hide {
+    display: none !important;
+}
+
+.webform-client-form  div.webform-show {
+    display: block !important;
+}
+
+.webform-client-form .constituent-information .home-details-fieldset {
+  border: 0px;
+}
+
+.webform-client-form .constituent-information .home-details-fieldset legend {
+  background-color: #f49a2b;
+  border: 1px solid #666;
+  color: #fff;
+  font-size: 19px;
+  font-weight: bold;
+  margin: 10px -5px;
+  padding: 8px !important;
+  width: 99.5%;
+}
+
+.webform-client-form .constituent-information label,
+.webform-client-form .energy-coach-visit label,
+.webform-client-form .building-company-information label
+{
+    margin-right: 0;
+    width :250px;
+}
+
+
+.webform-client-form .loan-details-webform label
+{
+    margin-left: 10px;
+    margin-right: 0;
+    text-align: left;
+    width: 140px;
+    height :60px;
+    font-style: italic;
+   
+}
+
+.loan-details-webform .form-item .description {
+    color: #777777;
+    float: right;
+    font-size: 0.8em;
+    font-style: italic;
+    line-height: 1.2em;
+    margin-top: 5px;
+    text-align: right;
+    width: 261px;
+}
+
+
+.webform-client-form .home-detail-webform label,
+.webform-client-form .project-information label
+{
+    margin-right: 0;
+    width: 360px;
+}
+
+.webform-client-form .project-completed {
+   background: #fff7d8 none repeat scroll 0 0;
+   border: 1px solid #8b8b8b;
+}
+
+.webform-client-form .project-completed label
+{
+    margin-right: 0;
+    width: 440px;
+}
+
+.webform-client-form .constituent-information .form-checkboxes,
+.webform-client-form .energy-coach-visit .form-checkboxes,
+.webform-client-form .building-company-information .form-checkboxes
+{
+    margin-left: 250px;
+}
+
+.webform-client-form .project-completed .form-checkboxes,
+.webform-client-form .project-completed .form-radio
+{
+    margin-left: 430px;
+}
+
+.webform-client-form .webform-component-checkboxes .form-checkboxes label
+{
+    width:100%;
+    margin-bottom: 10px;
+}
+
+.interested-in-wrapper .form-checkboxes .form-item {
+    display: block;
+}
+
+.webform-client-form .home-detail-webform .form-radios {
+    margin-left: 360px;
+}
+
+.building-type-wrapper .form-radios .form-item {
+    display: block;
+}
+
+#footer {
+   margin-top: 20px;
+}
+
+.contractor_portal a {
+  text-decoration: none !important;
+}
+
+.portal-url {
+    display: inline-block;
+    margin: 4px 1px 4px 0;
+    padding: 0;
+}
+
+.portal-url a {
+    font-size: 13px;
+}
+
+#h-name {
+    width: 160px;
+}
+
+#p-status {
+    background: #d3f5af none repeat scroll 0 0;
+    border: 1px solid #bebfb9;
+    padding: 7px;
+    width: 98.3% !important;
+}
+
+#h-name-img {
+    background: url("../images/user.png") no-repeat;
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    margin-bottom: -4px;
+}
+
+#h-data-img {
+    background: url("../images/home.png") no-repeat;
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    margin-bottom: -3px;
+}
+
+#e-coach-img {
+    background: url("../images/energycoach.png") no-repeat;
+    display: inline-block;
+    height: 24px;
+    width: 25px;
+    margin-bottom: -3px;
+}
+
+#building-img {
+    background: url("../images/organization.png") no-repeat;
+    display: inline-block;
+    height: 33px;
+    width: 25px;
+    margin-bottom: -6px;
+}
+
+#new-lead-img {
+    background: url("../images/new-lead.png") no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    margin-bottom: -8px;
+}
+
+#p-info-img {
+    background: url("../images/project-info.png") no-repeat;
+    display: inline-block;
+    height: 33px;
+    width: 25px;
+    margin-bottom: -12px;
+}
+
+#p-complete-img {
+    background: url("../images/project-completed.png") no-repeat;
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    margin-bottom: -6px;
+}
+
+#d-bid-img {
+    background: url("../images/bidding.png") no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 25px;
+    margin-bottom: -12px;
+    /*margin-left: 194px;*/
+}
+
+#loan-img {
+    background: url("../images/loan_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 30px;
+    margin-bottom: -6px;
+    width: 30px;
+}
+
+#project-status {
+    color:#FDA102;
+    font-weight: bold;
+}
+
+.webform-client-form .building-company-information .form-checkboxes label {
+    float: none;
+}
+
+.company-type-wrapper .form-checkboxes .form-item {
+    display: block;
+}
+
+.page-node-344 .status {
+    display:none;
+}
+
+.loan-details-webform {
+    width:100%;
+    height:950px;
+}
+
+#pre-post-installation {
+    border:1px solid;
+    width: 48.5%;
+    position: relative;
+    padding:5px;
+    text-align: center;
+    height: inherit;
+}
+
+#pre-post-installation h3{
+    color:#fb9a00;
+}
+
+#pre-post-installation span.loan-subtitle {
+    color:#fb9a00;
+}
+
+.loan-fieldset {
+    display : none;
+}
+
+.webform-client-form .loan-details-webform .long-file-label label{
+    width : 140px;
+    height: 60px;
+}
+
+.webform-client-form .loan-details-webform .upload-bid-wrapper label{
+    width : 140px;
+}
+
+.long-file-label .description {
+    text-align: left;
+}
+
+.upload-bid-wrapper .description {
+    display: block;
+    margin-left: 149px;
+    text-align: left;
+}
+
+.file-disable{
+  /*  opacity:0.5; */
+    pointer-events:none;
+}
+
+.ecv-webform .file-disable {
+  pointer-events:all;
+}
+
+.file-disable .form-submit {
+   display:none;
+}
+
+.civicrm-file-icon { 
+   pointer-events:initial;	
+}
+
+.loan-details-webform p.form-actions {
+    float: none;
+    padding-top: 0;
+   margin-top: 60px;
+}
+
+#block-block-5 {
+    font-weight: bold;
+    margin-right: 5px;
+    margin-top: 69px;
+    position: absolute;
+    text-align: right;
+    width: 415px;
+    z-index: 999;
+}
+#block-block-5 a {
+    font-family: "Lucida Sans",HelveticaNeue,Helvetica,"Myriad Pro",Arial;
+    color: #f9ab03;
+    text-decoration: underline;
+}
+
+#block-masquerade-masquerade {
+    float: right;
+    width: 263px;
+}
+
+.newsletter-signup {
+   clear: right;	
+}
+
+.project-information-contractor {
+   display : none;
+}
+
+/*******ECV Form*************/
+.page-node-346 h1.title {
+    display: none;
+}
+
+.headline {
+    color: #358a30;
+    font-family: "Lucida Sans", HelveticaNeue, Helvetica, "Myriad Pro", Arial;
+    font-weight: bold;
+    font-size: xx-large;
+}
+.headline2 {
+    color: #358a30;
+    font-family:  'Lobster', cursive;
+    font-weight: 415;
+    font-size: xx-large;
+    font-family: lobster;
+    font-style: normal;
+}
+.headline3 {
+    color: #358a30;
+    font-family: 'Lobster', cursive;
+    font-weight: 415;
+    font-size: xx-large;
+    font-family: lobster;
+    font-style: normal;
+}
+
+.topbox {
+    padding-top: 0px;
+    font-size: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+.box1 {
+    background-color: #F49A2B;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: center;
+    height: 30px;
+    width: 930px;
+    font-family: 'Lobster', cursive;
+    font-weight: 415;
+    font-size: xx-large;
+    font-family: lobster;
+    font-style: normal;
+    margin-top: 12px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    color: #fff;
+    text-align: center;
+}
+.box1new {
+    background-color: #fff;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: center;
+    height: 30px;
+    width: 930px;
+    font-family:  'Lobster', cursive;
+    font-weight: 415;
+    font-size: xx-large;
+    font-family: lobster;
+    font-style: normal;
+    margin-top: 12px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    color: #F49A2B;
+    text-align: center;
+}
+.welcome {
+    background-color: #fff;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: center;
+    width: 850px;
+    font-family:'Lobster', cursive;
+    font-weight: normal;
+    font-size: medium;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-style: normal;
+    margin-top: 12px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    color: #31619D;
+    text-align: left;
+    line-height: 1.7em;
+}
+.foursteps {
+    background-color: #f6f1d7;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: center;
+    width: 550px;
+    font-family: 'Lobster', cursive;
+    font-weight: normal;
+    font-size: large;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-style: normal;
+    margin-top: 12px;
+    margin-right: auto;
+    margin-left: 275px;
+    margin-bottom: 0;
+    color: #31619D;
+    text-align: left;
+    line-height: 1.7em;
+}
+.fourstepsbox1 {
+    background-color: #f6f1d7;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: left;
+    width: 375px;
+    font-family: 'Lobster', cursive;
+    font-weight: normal;
+    font-size: medium;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-style: normal;
+    margin-top: 12px;
+    margin-right: auto;
+    margin-left: 65px;
+    margin-bottom: 0;
+    color: #31619D;
+    text-align: left;
+    line-height: 1.7em;
+}
+.fourstepsbox2 {
+    background-color: #f6f1d7;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: right;
+    width: 375px;
+    font-family: 'Lobster', cursive;
+    font-weight: normal;
+    font-size: medium;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-style: normal;
+    margin-top: 12px;
+    margin-right: 85px;
+    margin-left: 0px;
+    margin-bottom: 0;
+    color: #31619D;
+    text-align: left;
+    line-height: 1.7em;
+    right: auto;
+}
+.box2 {
+    background-color: #F49A2B;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: center;
+    height: 20px;
+    width: 930px;
+    font-family: 'Lobster', cursive;
+    font-weight: bold;
+    font-size: x-large;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-style: normal;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    color: #FFF;
+    text-align: center;
+}
+.center {
+    margin: 0 auto;
+}
+.ecv-webform table{
+    width: 930px;
+}
+
+.summarybox {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: none;
+    height: auto;
+    width: 930px;
+    margin-top: 12px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
+    background-color: #f6f1d7;
+    clear: both;
+    border-radius: 20px;
+}
+.imageleft {
+    float: left;
+    margin-right: 15px;
+}
+.summarybox p {
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    text-align: left;
+    margin-left: 35px;
+    line-height: 2em;
+    font-weight: bold;
+}
+.summarybox h1 {
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+}
+.attachmentsbox {
+    height: 200px;
+}
+.attachmentsbox ol {
+    margin-top: 10px;
+}
+.attachmentsbox ol li{
+    height: 50px;
+    list-style-type: none;
+}
+.attachmentsbox .form-item {
+    margin-top: 7px;
+}
+
+.attachmentsbox .form-item .description{
+    display: none;
+}
+
+.attach-title {
+    float: left;
+    margin-top: 7px;
+}
+.attach-values {
+    width: 750px;
+    float: right;
+}
+
+.recommendationsbox {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: none;
+    height: auto;
+    width: 930px;
+    margin-top: 12px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    background-color: #CFDEF1;
+    clear: both;
+    border-radius: 20px;
+}
+.recommendationsbox p {
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    list-style-position: outside;
+    list-style-type: none;
+    text-align: center;
+}
+.recommendationsbox h1 {
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+}
+.recommendationsbox ol li {
+    text-align: left;
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    line-height: 2em;
+    margin-left: 22px;
+}
+.recommendationsboxheader {
+    background-color: #1b5093;
+    padding-top: 5px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 5px;
+    float: center;
+    height: 30px;
+    width: 930px;
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    color: #CFDEF1;
+    text-align: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.summaryboxheader {
+    background-color: #F49A2B;
+    padding-top: 5px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 5px;
+    float: center;
+    height: 30px;
+    width: 930px;
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    color: #f6f1d7;
+    text-align: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.contractorbox {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    float: none;
+    height: auto;
+    width: 930px;
+    margin-top: 12px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    background-color: #CFDEF1;
+    clear: both;
+    border-radius: 20px;
+}
+.contractorbox p {
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    list-style-position: outside;
+    list-style-type: none;
+}
+.contractorbox h1 {
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+}
+.contractorbox ul li {
+    text-align: left;
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    line-height: 2em;
+    margin-left: 22px;
+}
+.contractorboxheader {
+    background-color: #1b5093;
+    padding-top: 5px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 5px;
+    float: center;
+    height: 30px;
+    width: 930px;
+    color: #1b5093;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    color: #CFDEF1;
+    text-align: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+tbody tr th {
+    background-color: #1b5093;
+    color: #fff;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+}
+.sectionmeasures {
+    background-color: #46a141;
+    color: #fff;
+    text-align: center;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: small;
+    line-height: 1.5em;
+    font-weight: normal;
+    margin-top: -12px;
+}
+.sectionmeasuresheader {
+    background-color: #46a141;
+    color: #F8ECB0;
+    text-align: center;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: medium;
+    line-height: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0px;
+    margin-top: -10px;
+}
+body table tbody{
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    padding-left: 0px;
+}
+
+.page-node table tbody{
+  border: 1px solid #31619D;
+}
+
+.sectioninfo {
+    color: #31619D;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-size: small;
+    line-height: 1.7em;
+    padding-left: 0px;
+    text-align: left;
+}
+.sectioninfo td {
+    padding-left: 12px;
+    border: 1px solid #31619D;
+    vertical-align: top;
+}
+td blockquote p {
+    margin-top: -15px;
+}
+.fourstepsheader {
+    color: #31619D;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-weight: bold;
+    font-size: x-large;
+    text-align: center;
+}
+.summarybox p a {
+    color: #0494E0;
+    text-decoration: none;
+}
+.summarybox p a:visited{
+    color: #0494E0;
+    text-decoration: none;
+}
+.summarybox p a:hover{
+    color: #0494E0;
+    text-decoration: underline;
+}
+.fourstepscontact {
+    color: #31619D;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-weight: bold;
+    font-size: large;
+    text-align: left;
+    margin-top: -25px;
+    margin-bottom: -10px;
+}
+.welcome img {
+    float: right;
+    margin-right: 0px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+.summarybox .fourstepsbox1 ul {
+    margin-left: 45px;
+    margin-top: -12px;
+}
+.clear {
+    clear: both;
+    margin-top: -1px;
+    margin-bottom: -12px;
+}
+.stepsheaders {
+    color: #31619D;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-weight: bold;
+    font-size: large;
+}
+.sectionmeasuresheader p {
+    margin-top: 2px;
+    margin-bottom: 10px;
+}
+.summarybox .fourstepsbox2 ul  {
+    margin-left: 45px;
+    margin-top: -12px;
+    font-size: medium;
+}
+.ecv-values{
+    font-size: 13px;
+    font-weight: normal;
+    margin-left: 10px;;
+}
+.ecv-recommended{
+    color: #FDA102;
+}
+
+.ecv-top{
+    font-style: italic;
+}
+
+.page-civicrm-event-info #crm-container.crm-public .crm-section, .crm-section {
+    margin-bottom: 1em !important;
+}
+.page-civicrm-event-info #content-area {
+    margin-top: 40px;
+}
+
+.page-civicrm-event-info #crm-container.crm-public .label {
+    padding: 0px;
+}
+
+/*
+#webform-client-form-352 .webform-submit {
+    display: none;
+}
+*/
+
+.webform-client-form .form-actions input{
+     float: left;
+     margin-left: 15px; 
+}
+
+.page-node-352 .messages p {
+    margin: 0px;
+}
+
+/****HomeOwner Portal Begins***/
+.tooltip-inner {
+  white-space: pre-wrap !important;
+}
+
+.ui-tooltip, .arrow:after {
+    background: #ffffff;
+    border: 1px solid #ccc;
+}
+.ui-tooltip {
+    padding: 10px 20px;
+    color: #435d6a;
+    border-radius: 10px;
+    font: 13px "Helvetica Neue", Sans-Serif;
+}
+.arrow {
+    width: 70px;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    bottom: -16px;
+}
+.arrow.top {
+    top: -16px;
+    bottom: auto;
+}
+.arrow.left {
+    left: 20%;
+}
+.arrow:after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    width: 25px;
+    height: 25px;
+    box-shadow: 6px 5px 9px -9px black;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.arrow.top:after {
+    bottom: -20px;
+    top: auto;
+}
+#main-image {
+    border: 1px solid gold;
+}
+.main-image-inactive {
+  opacity: 0.5;
+}
+
+div.no-update-priority a{
+    color: #e5291c;
+    text-decoration: none !important;
+    font-size: 21px;
+    font-weight: bold;
+    left: 247px;
+    margin: auto;
+    position: absolute;
+    text-align: center;
+    top: 151px;
+    width: 364px;
+    z-index: 99999;
+}
+
+.priority-none {
+  border: 4px solid lightgrey;
+  border-radius: 75px;
+  -webkit-border-radius: 75px;
+  -moz-border-radius: 75px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+  -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+
+.priority-high {
+    border: 4px solid #E5291C;
+    border-radius: 75px;
+    -webkit-border-radius: 75px;
+    -moz-border-radius: 75px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+.priority-medium {
+    border: 4px solid #F49A2B;
+    border-radius: 75px;
+    -webkit-border-radius: 75px;
+    -moz-border-radius: 75px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+.priority-low {
+    border: 4px solid #FFE291;
+    border-radius: 75px;
+    -webkit-border-radius: 75px;
+    -moz-border-radius: 75px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+
+#insulation-img-active {
+    background-image: url("../images/homeowner_portal/insulation.jpg");
+    background-repeat: no-repeat;
+    height: 125px;
+    position: absolute;
+    right: 308px;
+    top: 30px;
+    width: 125px;
+}
+
+#insulation-img-inactive {
+    background-image: url("../images/homeowner_portal/insulation_screened.jpg");
+    background-repeat: no-repeat;
+    height: 125px;
+    width: 125px;
+    position: absolute;
+    right: 308px;
+    top: 30px;
+    border: medium none !important;
+}
+
+#heating-img-active {
+    background-image: url("../images/homeowner_portal/heating.jpg");
+    background-repeat: no-repeat;
+    height: 125px;
+    width: 125px;
+    position: absolute;
+    right: 165px;
+    top: 115px;
+}
+
+#heating-img-inactive {
+    background-image: url("../images/homeowner_portal/heating_screened.jpg");
+    background-repeat: no-repeat;
+    height: 125px;
+    width: 125px;
+    position: absolute;
+    right: 165px;
+    top: 115px;
+    border: medium none !important;
+}
+#waterheater-img-active {
+    background-image: url("../images/homeowner_portal/water_heater.jpg");
+    background-repeat: no-repeat;
+    bottom: 207px;
+    height: 125px;
+    position: absolute;
+    right: 60px;
+    width: 125px;
+}
+
+#waterheater-img-inactive {
+    background-image: url("../images/homeowner_portal/water_heater_screened.jpg");
+    background-repeat: no-repeat;
+    bottom: 207px;
+    height: 125px;
+    position: absolute;
+    right: 60px;
+    width: 125px;
+    border: medium none !important;
+}
+#cooling-img-active {
+    background-image: url("../images/homeowner_portal/cooling.jpg");
+    background-repeat: no-repeat;
+    bottom: 61px;
+    height: 125px;
+    position: absolute;
+    right: 185px;
+    width: 125px;
+}
+
+#cooling-img-inactive {
+    background-image: url("../images/homeowner_portal/cooling_screened.jpg");
+    background-repeat: no-repeat;
+    bottom: 61px;
+    height: 125px;
+    position: absolute;
+    right: 185px;
+    width: 125px;
+    border: medium none !important;
+}
+
+#lighting-img-active {
+    background-image: url("../images/homeowner_portal/lighting.jpg");
+    bottom: 61px;
+    height: 125px;
+    position: absolute;
+    right: 381px;
+    width: 125px;
+}
+#lighting-img-inactive {
+    background-image: url("../images/homeowner_portal/lighting_screened.jpg");
+    bottom: 61px;
+    height: 125px;
+    position: absolute;
+    right: 381px;
+    width: 125px;
+    border: medium none !important;
+}
+
+#windows-img-active {
+    background-image: url("../images/homeowner_portal/windows.jpg");
+    background-repeat: no-repeat;
+    bottom: 62px;
+    height: 125px;
+    left: 185px;
+    position: absolute;
+    width: 125px;
+}
+
+#windows-img-inactive {
+    background-image: url("../images/homeowner_portal/windows_screened.jpg");
+    background-repeat: no-repeat;
+    bottom: 62px;
+    height: 125px;
+    left: 185px;
+    position: absolute;
+    width: 125px;
+    border: medium none !important;
+}
+
+#airsealing-img-active {
+    background-image: url("../images/homeowner_portal/air_sealing.jpg");
+    background-repeat: no-repeat;
+    bottom: 208px;
+    height: 125px;
+    left: 70px;
+    position: absolute;
+    width: 125px;
+}
+
+#airsealing-img-inactive {
+    background-image: url("../images/homeowner_portal/air_sealing_screened.jpg");
+    background-repeat: no-repeat;
+    bottom: 208px;
+    height: 125px;
+    left: 70px;
+    position: absolute;
+    width: 125px;
+    border: medium none !important;
+}
+
+#ducting-img-active {
+    background-image: url("../images/homeowner_portal/ducts.jpg");
+    background-repeat: no-repeat;
+    height: 125px;
+    left: 130px;
+    position: absolute;
+    top: 116px;
+    width: 125px;
+}
+
+#ducting-img-inactive {
+    background-image: url("../images/homeowner_portal/ducts_screened.jpg");
+    background-repeat: no-repeat;
+    height: 125px;
+    left: 130px;
+    position: absolute;
+    top: 116px;
+    width: 125px;
+    border: medium none !important;
+}
+
+#other-img-active {
+    background-image: url("../images/homeowner_portal/other.jpg");
+    background-repeat: no-repeat;
+    height: 125px;
+    left: 308px;
+    position: absolute;
+    top: 32px;
+    width: 125px;
+}
+
+
+#other-img-inactive {
+    background-image: url("../images/homeowner_portal/other_screened.jpg");
+    background-repeat: no-repeat;
+    height: 125px;
+    left: 308px;
+    position: absolute;
+    top: 32px;
+    width: 125px;
+    border: medium none !important;
+}
+
+
+.installed-inactive {
+    background-image: url("../images/homeowner_portal/tickmark.png");
+    height: 45px;
+    position: absolute;
+    right: 35px;
+    top: 25px;
+    width: 45px;
+    background-repeat: no-repeat;
+}
+
+.hr-line {
+    width: 100%;
+    border: 1px solid darkgray;
+}
+
+.node-type-webform #content-header h1.title,
+.node-type-homeowner-portal h1.title,
+.page-energy-saving-giveaway h1.title
+{
+    color: #fff;
+    font-size: 19px;
+    font-weight: bold;
+    padding: 8px !important;
+    background-color: #f49a2b;
+    border: 1px solid #666;
+    margin: 10px 0;
+}
+
+.page-node-351 h1.title {
+    background-color: #49A044;
+    text-align: center;
+}
+
+#homeowner-portal-home .hw-container #hw-my-info strong,
+#homeowner-portal-home .hw-container #hw-my-pathway strong {
+  color:#49A044 !important;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#homeowner-portal-home .hw-container p.welcome-title
+{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#homeowner-portal-home .hw-container strong,
+#homeowner-portal-home .hw-container b
+{
+    color: #f49a2b !important;
+}
+
+.homeowner_portal strong {
+    color: #FDA102;
+    font-size: 15px;
+}
+
+.homeowner_portal .step1_a {
+    color: #FDA102;
+}
+.homeowner_portal p,
+.homeowner_portal a,
+.homeowner_portal li,
+.homeowner_portal label
+{
+    font-family: "Lucida Sans",HelveticaNeue,Helvetica,"Myriad Pro",Arial;
+    font-size: 13px;
+    margin: 0.5em 0;
+}
+
+.hw-container {
+    border: 1px solid #ccc;
+    display: block;
+    height: auto;
+    margin: 0.5em 0;
+    padding: 10px;
+    position: relative;
+    /*width: 100%;*/
+}
+
+.hw-container b {
+    font-size: 15px;
+    color:#FDA102;
+}
+
+.hw-container p,
+.hw-container a,
+.hw-container li,
+.hw-container label
+{
+    font-family: "Lucida Sans",HelveticaNeue,Helvetica,"Myriad Pro",Arial;
+    font-size: 13px;
+    margin: 0.5em 0;
+}
+
+#hw-head {
+    text-align: center;
+    margin: auto;
+    font-size: 17px;
+}
+
+.sub-container {
+    margin: auto;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.sub-container-label {
+    color:#49A044;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.sub-ecv-label {
+  border-color: gold gold white;
+  border-style: solid;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-width: 2px;
+  color: #194e92;
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 10px auto -24px;
+  position: relative;
+  text-align: center;
+  width: 300px;
+  z-index: 999;
+}
+
+.sub-container-right {
+    border: 1px solid #FDA102;
+    float: right;
+    position: relative;
+    width: 50%;
+}
+
+.homeowner_portal label:before {
+    content: url("../images/unchecked_checkbox.png");
+    z-index: 100;
+    vertical-align: top;
+}
+
+#priority-desc li {
+    font-size: 12px;
+    list-style: outside none none;
+}
+
+#priority-desc {
+    float: right;
+    margin-bottom: -156px;
+    position: absolute;
+    right: 0;
+    width: 155px;
+    z-index: 999;
+}
+
+#priority-desc div#no {
+    background-color: lightgrey;
+    border: 1px solid lightgrey;
+    border-radius: 13px;
+    float: left;
+    height: 13px;
+    margin-right: 5px;
+    width: 13px;
+    margin-top: 5px;
+}
+#priority-desc div#high {
+    background-color: #e5291c;
+    border: 1px solid #e5291c;
+    border-radius: 13px;
+    float: left;
+    height: 13px;
+    margin-right: 5px;
+    width: 13px;
+    margin-top: 5px;
+}
+#priority-desc div#medium {
+    background-color: #f49a2b;
+    border: 1px solid #f49a2b;
+    border-radius: 13px;
+    float: left;
+    height: 13px;
+    margin-right: 5px;
+    width: 13px;
+    margin-top: 5px;
+}
+#priority-desc div#low {
+    background-color: #ffe291;
+    border: 1px solid #ffe291;
+    border-radius: 13px;
+    float: left;
+    height: 13px;
+    margin-right: 5px;
+    width: 13px;
+    margin-top: 5px;
+}
+
+#priority-desc div#complete {
+    background-image: url("../images/completed_legend.png");
+    background-repeat: no-repeat;
+    float: left;
+    height: 15px;
+    margin-right: 5px;
+    width: 15px;
+    margin-top: 5px;
+}
+
+
+.homeowner_portal :checked+label:before {
+    content: url("../images/checked_checkbox.png");
+    vertical-align: top;
+}
+
+.homeowner_portal .sub-container-main input[type=checkbox] {
+    display: none;
+}
+
+.homeowner_portal label {
+    margin: 10px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+#hw-start-learning {
+    float: left;
+}
+
+#hw-start-saving{
+   float: right;
+}
+
+#hw-start-learning label,
+#hw-start-saving label
+ {
+    float:left;
+    margin-top: 4px;
+    width: 25px;
+}
+
+#hw-start-learning a,
+#hw-start-saving a {
+    text-decoration:none !important;
+}
+.diy-webform #diy-container,#home-details-container {
+    /*border: 1px solid #777777;*/
+    color: #000;
+    font-size: 14px;
+}
+
+#diy-container tbody,
+#home-details-container tbody
+{
+   border: 1px solid;
+}
+
+#diy-container table,
+#home-details-container table
+{
+    background-color: #f49a2b;
+    width: 100% !important;
+}
+
+
+#diy-container table td,
+#home-details-container table td
+{
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px !important;
+}
+
+#home-details-container label {
+    width: 225px;
+}
+
+.field-prefix {
+    /*margin-left: -13px;*/
+}
+
+#diy-container .diy-chk-group {
+    border: 1px solid;
+    display: block;
+    height: 100%;
+    position: relative;
+    margin-bottom: 12px !important;
+}
+
+#diy-container .form-item {
+    margin: 0px;
+    border-top: 1px solid;
+    line-height: 27px;
+}
+
+
+#diy-container fieldset {
+    padding: 0;
+    border: 0px;
+}
+
+#diy-container input.form-checkbox {
+    float: right;
+    margin: 5px 25px;
+}
+
+#diy-container label{
+    width: 99%;
+    float: none;
+    padding: 5px;
+}
+
+#diy-container div.webform-component-checkboxes > label {
+    background: #46a141 none repeat scroll 0 0;
+    color: #f8ecb0;
+    font-weight: 700;
+    padding: 5px !important;
+}
+
+.low-income label {
+    width: auto !important;
+    clear: both;
+}
+
+.low-income input.form-checkbox {
+    margin-left: 20px;
+}
+
+.low-income div.webform-component-checkboxes > label,
+.low-income div.webform-component-textfield > label,
+.low-income div.webform-component-radios > label
+{
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.i-understand label{
+    margin-top: 30px;
+}
+
+.low-income-popup2{
+  background: rgba(0, 0, 0, 0.8) none repeat scroll 0 0;
+  border-radius: 8px;
+  box-shadow: 0 0 6px #000;
+  clear: both;
+  color: #fff;
+  font-size: 12px;
+  margin-left: 30px;
+  margin-top: -14px;
+  overflow: auto;
+  padding: 10px;
+  position: absolute;
+  width: 250px;
+  z-index: 999999;
+}
+
+.low-income-popup {
+    overflow: auto;
+    position: absolute;
+    font-size: 12px;
+    width: 450px;
+    margin-left: 35px;
+    background: rgba(0,0,0,0.8);
+    box-shadow: 0 0 6px #000;
+    z-index: 999999;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    clear: both;
+}
+
+#interest-in-options {
+  font-size: 13px;
+}
+
+.img-icons {
+    background:transparent url("../images/info-xl.png") no-repeat;
+    height: 20px;
+    width: 20px;
+    display: block !important;
+    float: right;
+    margin: 3px -15px;
+}
+
+a.ui-notify-cross {
+    margin-top: -4px;
+    float: right;
+    text-decoration: none !important;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 0 1px 1px #fff;
+    padding: 2px;
+    color: #FDFDFD !important;
+}
+
+/*choose your contractor*/
+fieldset.energy-coach-visit {
+  display: none;
+}
+
+
+#hw-energy-upgrade .stages {
+    display: block;
+    /*height: 233px;*/
+    /*width: 139px;*/
+    float: left;
+    margin-right: 7px;
+}
+
+#hw-energy-upgrade .dash-img {
+    float: left;
+    margin-top: 50px;
+    vertical-align: middle;
+}
+
+#step-1-active{
+    background:transparent url("../images/energy_upgrade/step1.png") no-repeat;
+    width: 130px;
+    height: 243px;
+}
+
+#step-1-inactive {
+    background:transparent url("../images/energy_upgrade/step1_gray.png") no-repeat;
+    width: 130px;
+    height: 243px;
+}
+
+/*Apply for Financing*/
+#step-2-active{
+    background:transparent url("../images/energy_upgrade/step2.png") no-repeat;
+    width: 133px;
+    height: 243px;
+}
+#step-2-inactive {
+    background:transparent url("../images/energy_upgrade/step2_gray.png") no-repeat;
+    width: 130px;
+    height: 243px;
+}
+
+/*Install upgrade*/
+#step-3-active {
+    background:transparent url("../images/energy_upgrade/step3.png") no-repeat;
+    width: 117px;
+    height: 243px;
+}
+#step-3-inactive {
+    background:transparent url("../images/energy_upgrade/step3_gray.png") no-repeat;
+    width: 130px;
+    height: 243px;
+}
+
+/*Receive Funds*/
+#step-4-active{
+    background:transparent url("../images/energy_upgrade/step4.png") no-repeat;
+    width: 121px;
+    height: 243px;
+}
+#step-4-inactive {
+    background:transparent url("../images/energy_upgrade/step4_gray.png") no-repeat;
+    width: 130px;
+    height: 243px;
+}
+
+.mark-inactive {
+    background-image: url("../images/homeowner_portal/tickmark.png");
+    height: 45px;
+    left: 55px;
+    position: relative;
+    top: 155px;
+    width: 45px;
+    background-repeat: no-repeat;
+}
+
+/*complete Free Energy Upgrades*/
+#node-415 .desktop-bid table tr th,
+#node-416 .desktop-bid table tr th
+{
+    background-color: #f49a2b;
+    border: 1px solid #666;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px !important;
+    border: 1px solid #666;
+    margin: 10px 0;
+}
+
+#node-415 .desktop-bid,
+#node-416 .desktop-bid
+{
+    font-size: 13px;
+    font-weight: normal;
+}
+
+#node-415 .desktop-bid .form-item,
+#node-416 .desktop-bid .form-item
+{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+#node-415 fieldset,
+#node-416 fieldset
+{
+    border: 0px !important;
+}
+
+#node-415 .desktop-bid label,
+#node-416 .desktop-bid label
+{
+    display: none;
+}
+
+#node-415 .desktop-bid label.option,
+#node-416 .desktop-bid label.option
+{
+    display: block;
+    font-size: 0;
+    text-align: center;
+}
+
+#node-415 .desktop-bid label.option:nth-child(2),
+#node-416 .desktop-bid label.option:nth-child(2)
+{
+    display: none;
+}
+
+
+#node-415 .desktop-bid td.priority_td,
+#node-416 .desktop-bid td.priority_td
+{
+    color: #fff !important;
+    text-align: center;
+}
+
+#node-415 .desktop-bid td,
+#node-416 .desktop-bid td
+{
+    border: 1px solid #bebfb9;
+}
+
+#node-415 .desktop-bid td.improvement-category,
+#node-416 .desktop-bid td.improvement-category
+{
+    background: #46a141 none repeat scroll 0 0;
+    color: #f8ecb0;
+    font-weight: bold;
+    font-size: 14px;
+    font-style: italic;
+    padding: 5px !important;
+    border: 1px solid black;
+}
+
+#node-415 .desktop-bid td.improvement-category-values,
+#node-416 .desktop-bid td.improvement-category-values
+{
+    background: #92D050 none repeat scroll 0 0;
+    color: #f8ecb0;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px !important;
+    border: 1px solid black;
+}
+
+
+.desktop-bid td:nth-of-type(2),
+.desktop-bid th:nth-of-type(2),
+#node-416 .desktop-bid td:nth-of-type(4),
+#node-416 .desktop-bid th:nth-of-type(4)
+{
+    display: none;
+}
+
+#node-415 .webform-component--civicrm-2-contact-1-fieldset-fieldset,
+#node-416 .webform-component--civicrm-2-contact-1-fieldset-fieldset
+{
+    display: none;
+}
+
+#h_s{
+    color: #E5291C;
+    margin-left: 6px;
+}
+
+.add-info p {
+    margin: 0px;
+    font-size: 13px;
+}
+
+.county-details {
+    width: 230px;
+}
+
+.county-details p {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+#hw-energy-upgrade .stages:hover {
+    border: 1px solid #fda102;
+    border-radius: 4px;
+    -webkit-transition: all 0.5s;
+}
+
+.stages .inactive {
+    position:relative; top:0px; opacity:0;
+}
+
+.stages:hover .inactive {
+    opacity:0.7;
+}
+
+.webform-component--participating-contractors input[type=checkbox] {
+    float: left;
+    margin-top: 38px;
+    margin-right: 10px;
+}
+
+.webform-component--participating-contractors .view-view-directory-list {
+    float: left;
+    width: 90%;
+}
+
+#pre_installation_img {
+    background-image: url("../images/step2_signing.jpg");
+    float: right;
+    height: 225px;
+    width: 225px;
+    margin-top: 76px;
+}
+
+#install_upgrade_img {
+    background-image: url("../images/install_upgrade.png");
+    float: right;
+    height: 161px;
+    width: 192px;
+    margin-top: 34px;
+    margin-right: 75px;
+}
+
+#receive_funds_img {
+  background-image: url("../images/step4_Mortgage.png");
+  float: right;
+  height: 200px;
+  width: 200px;
+  margin-top: 75px;
+  margin-right: 75px;
+}
+
+#rebet-incentives b {
+  color:#194e92;
+  font-weight: bold;
+}
+#rebet-incentives th {
+  padding: 5px;
+}
+
+#rebet-incentives td {
+  border: 1px solid;
+}
+
+#rebet-incentives td.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/*Choose your contractor upgrade page */
+#contractor-table tr{
+    clear: right;
+    float: left;
+    margin: 2px 0;
+    width: 100%;
+    color: #194e92;
+}
+
+#contractor-table tr td.view-contractors-chkbox {
+    padding: 5px 5px 5px 15px;
+}
+
+#contractor-table tr td.view-contractors-label {
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px;
+    width: 100%;
+}
+.view-contractors-label .display-row {
+    background: rgba(0, 0, 0, 0) url("../images/directory_bg.jpg") repeat-x scroll 0 0;
+    border-radius: 3px 3px 0 0;
+}
+
+.view-contractors-label .display-name {
+    padding: 10px 20px;
+    border-bottom: 3px solid white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.view-contractors-label .display-type {
+    padding: 10px 20px;
+    border-bottom: 3px solid white;
+    color: #357a22;
+    font-size: 12px;
+}
+
+.view-contractors-label .type-icon {
+    margin-bottom: -5px;
+    margin-right: 5px;
+}
+
+.participant-contractor-list span.ui-accordion-header {
+    font-size: 14px;
+    color:#194e92;
+    font-weight: bold;
+}
+
+.participant-contractor-list .ui-accordion .ui-accordion-content {
+    padding: 5px 5px 5px 13px !important;
+}
+
+.participant-contractor-list input[type=button] {
+    background: #fbe656 url("../images/more-btn-bg.gif") repeat-x scroll left bottom;
+    border: 0 none;
+    cursor: pointer;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    height: 23px;
+    padding: 0 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.participant-contractor-list tr.existing-record {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.65;
+}
+
+.participant-contractor-list .webform-component--participating-contractors input[type="checkbox"] {
+    margin: 10px;
+}
+
+.contractor-listing-table tr  th {
+    padding: 5px;
+}
+
+#webform-client-form-400 .form-required {
+  float: left;
+}
+
+#webform-client-form-400 label {
+  float:none;
+}
+
+#webform-client-form-348 div.form-item {
+   /* background-color: #fff7d8;*/
+    border-radius: 5px;
+    margin: 2px;
+    padding: 5px 10px;
+}
+
+#webform-client-form-348 .fieldset-wrapper {
+   /* border: 1px solid #fb9a00;
+    border-radius: 10px;*/
+}
+.webform-component--civicrm-1-contact-1-fieldset-fieldset--civicrm-1-contact-1-cg10-custom-90 {
+    min-height: 400px;
+}
+
+.tabledrag-hide {
+    display: block; !important;
+}
+
+.estimation_message #step_1 a {
+    color: #E5291C;
+    font-size: 12px;
+}
+
+#certificate-container {
+  width: 550px;
+  float:left;
+}
+
+#certificate-container  .label {
+  float: left;
+  width: 300px;
+  font-weight: bold;
+}
+
+#certificate-container  .value {
+  float: left;
+}
+
+#certificate-container  .no_value {
+  color: gray;
+  float: left;
+}
+
+.project-counts {
+  float: right;
+  font-size: 12px;
+  font-weight: normal;
+  margin-right: 5px;
+  margin-top: -36px;
+}
+
+input#select_contractor {
+  margin: 10px 0 10px 0;
+}
+
+.webform-component--civicrm-1-contact-1-fieldset-fieldset--civicrm-1-contact-1-address-location-type-id,
+.webform-component--civicrm-1-contact-1-fieldset-fieldset--civicrm-1-contact-1-phone-location-type-id,
+.webform-component--civicrm-1-contact-1-fieldset-fieldset--civicrm-1-contact-1-email-location-type-id
+ {
+  display:none;
+}
+
+/****HomeOwner Portal Ends***/
